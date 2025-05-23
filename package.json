@@ -1,0 +1,25 @@
+{
+  "name": "commithelper",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node bin/index.ts"
+  },
+  "bin": {
+    "commitHelper": "./dist/bin/index.js"
+  },
+  "keywords": ["git", "commit", "cli", "conventional-commits"],
+  "author": "임세윤",
+  "license": "ISC",
+  "description": "Git의 변경사항을 분석하여 commit 메시지를 자동으로 생성하는 도구",
+  "dependencies": {
+    "inquirer": "^12.6.1",
+    "simple-git": "^3.27.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
+
