@@ -87,13 +87,13 @@ $ npx commitHelper
 
 | 커밋 타입 | 설명 | 예시 |
 | --- | --- | --- |
-| Test | 테스트 파일 추가/수정 | Test: foo.test.ts 추가 |
-| Style | 코드 포맷팅 · 세미콜론 등 | Style: formatter.ts 수정 |
-| Fix | 버그 수정 | Fix: auth.ts 수정 |
-| Refactor | 코드 리팩터링 | Refactor: apiClient.ts 수정 |
-| Feat | 새로운 기능 추가 | Feat: login.ts 추가 |
-| Remove | 코드 · 파일 삭제 | Remove: oldUtils.ts 삭제 |
-| Etc | 그 외 변경 | Etc: docs.md 수정 |
+| `Test` | 테스트 파일 추가/수정 | `Test: foo.test.ts` 추가 |
+| `Style` | 코드 포맷팅 · 세미콜론 등 | `Style: formatter.ts` 수정 |
+| `Fix` | 버그 수정 | `Fix: auth.ts` 수정 |
+| `Refactor` | 코드 리팩터링 | `Refactor: apiClient.ts` 수정 |
+| `Feat` | 새로운 기능 추가 | `Feat: login.ts` 추가 |
+| `Remove` | 코드 · 파일 삭제 | `Remove: oldUtils.ts` 삭제 |
+| `Etc` | 그 외 변경 | `Etc: docs.md` 수정 |
 
 - 만약 사용자가 원하는 commit message가 없을 경우, 직접 수정할 수 있는 기능을 추가하였습니다.
 - 추천 받은 commit message를 선택하여도 마지막에 수정이 가능하도록 기능을 추가하였습니다.
