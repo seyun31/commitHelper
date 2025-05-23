@@ -100,3 +100,17 @@ $ npx commitHelper
 - commit type이나 commit message를 상황에 맞게 수정하여 사용할 수 있습니다.
 
 ---
+
+### 🛠️ 개발 & 품질 보증
+
+- Eslint 설정
+```bash
+npm run lint
+```
+<br>
+
+- Prettier 자동 포맷
+```bash
+npm run format
+```
+  
