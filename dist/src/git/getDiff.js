@@ -7,6 +7,6 @@ exports.getStagedDiff = getStagedDiff;
 const simple_git_1 = __importDefault(require("simple-git"));
 async function getStagedDiff() {
     const git = (0, simple_git_1.default)();
-    const diff = await git.diff(["--cached", "--name-only"]);
-    return diff.split("\n").filter(Boolean);
+    const diff = await git.diff(['--cached', '--name-only']);
+    return diff.split('\n').filter(Boolean);
 }
