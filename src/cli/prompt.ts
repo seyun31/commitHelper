@@ -11,7 +11,7 @@ export async function runCLI() {
     name: `${m.type}: ${m.filename} ${m.action}`,
     value: `${m.type}: ${m.filename} ${m.action}`
   }));
-
+  
   // 직접 입력 옵션 추가
   choices.push({ name: "✏️ 직접 입력", value: "✏️ 직접 입력" });
 
@@ -58,8 +58,7 @@ export async function runCLI() {
     finalMessage = editedMessage;
   }
 
-  finalMessage = finalMessage.trim();
-  if (!finalMessage) {
+  if (!finalMessage.trim()) {
     console.log("❌ 커밋 메시지를 입력하지 않아 커밋을 취소합니다.");
     return;
   }
