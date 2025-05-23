@@ -9,6 +9,7 @@ export async function generateMessages(files: string[]): Promise<string[]> {
     const filename = file.split("/").pop() ?? file;
 
     const diff = await git.diff(["--cached", file]);
+    if (!diff.trim()) continue;
     const addedLines = diff
       .split("\n")
       .filter((line) => line.startsWith("+") && !line.startsWith("+++"));
