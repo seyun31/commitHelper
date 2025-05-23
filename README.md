@@ -1,6 +1,7 @@
 # 👾 Commit Helper
 
 [![CI](https://github.com/seyun31/commitHelper/actions/workflows/ci.yml/badge.svg)](https://github.com/seyun31/commitHelper/actions/workflows/ci.yml)
+![npm](https://img.shields.io/npm/v/@seyun31/commithelper)
 
 > Git commit message를 자동으로 추천해주는 CLI 도구
 
