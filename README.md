@@ -1,6 +1,7 @@
 # 👾 Commit Helper
 
 [![CI](https://github.com/seyun31/commitHelper/actions/workflows/ci.yml/badge.svg)](https://github.com/seyun31/commitHelper/actions/workflows/ci.yml)
+![npm](https://img.shields.io/npm/v/@seyun31/commithelper)
 
 > Git commit message를 자동으로 추천해주는 CLI 도구
 
@@ -19,9 +20,15 @@
 
 ### 🚀 설치
 
-- npx 사용
 ```bash
-npx commitHepler
+#전역 설치
+npm install -g @seyun31/commithelper
+
+# npx 사용
+npm @seyun31/commithelper
+
+# 로컬 설치
+npm install @seyun31/commithelper
 ```
 
 ---
@@ -106,14 +113,24 @@ $ npx commitHelper
 
 ### 🛠️ 개발 & 품질 보증
 
-- Eslint 설정
+- Lint & Format
 ```bash
-npm run lint
+npm run lint # ESLint 검사
+npm run format # Prettier 자동 포맷
 ```
-<br>
 
-- Prettier 자동 포맷
+- 테스트
 ```bash
-npm run format
+npm test # Jest 테스트 실행
 ```
+
+- CI/CD
+  
+  1️⃣ `npm ci` 의존성 설치
+  
+  2️⃣ `npm run lint` 코드 스타일 검사
+  
+  3️⃣ `npm run build` TypeScript build
+  
+  4️⃣ `npm test` Jest 테스트
   
