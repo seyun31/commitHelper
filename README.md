@@ -121,7 +121,7 @@ npm run format # Prettier 자동 포맷
 
 - 테스트
 ```bash
-npm test # Jest 테스트 실행
+npm test # Jest 유닛 테스트 실행
 ```
 
 - CI/CD
@@ -132,5 +132,5 @@ npm test # Jest 테스트 실행
   
   3️⃣ `npm run build` TypeScript build
   
-  4️⃣ `npm test` Jest 테스트
+  4️⃣ `npm test` Jest 유닛 테스트
   
