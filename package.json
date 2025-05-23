@@ -18,7 +18,7 @@
     "cli",
     "conventional-commits"
   ],
-  "author": "세윤",
+  "author": "seyun31",
   "license": "ISC",
   "description": "Git의 변경사항을 분석하여 commit 메시지를 자동으로 생성하는 도구",
   "dependencies": {

@@ -20,7 +20,7 @@ export async function runCLI() {
     {
       type: "list",
       name: "selected",
-      message: "✨ 추천 커밋 메시지를 선택하세요:",
+      message: "✨ 추천 commit message를 선택하세요:",
       choices,
     },
   ]);
@@ -31,7 +31,7 @@ export async function runCLI() {
       {
         type: "input",
         name: "custom",
-        message: "✏️ 직접 커밋 메시지를 입력하세요:",
+        message: "✏️ 직접 commit message를 입력하세요:",
       },
     ]);
     finalMessage = custom;
@@ -42,7 +42,7 @@ export async function runCLI() {
     {
       type: "confirm",
       name: "confirmEdit",
-      message: `✅ 최종 커밋 메시지로 \"${finalMessage}\" 을(를) 사용하시겠습니까?`,
+      message: `✅ 최종 commmit message로 \"${finalMessage}\" 을(를) 사용하시겠습니까?`,
       default: true,
     },
   ]);
@@ -51,7 +51,7 @@ export async function runCLI() {
       {
         type: "input",
         name: "editedMessage",
-        message: "🛠️ 최종 커밋 메시지를 입력하세요:",
+        message: "🛠️ 최종 commit message를 입력하세요:",
         default: finalMessage,
       },
     ]);
@@ -59,7 +59,7 @@ export async function runCLI() {
   }
 
   if (!finalMessage.trim()) {
-    console.log("❌ 커밋 메시지를 입력하지 않아 커밋을 취소합니다.");
+    console.log("❌ commit message를 입력하지 않아 commit을 취소합니다.");
     return;
   }
 
