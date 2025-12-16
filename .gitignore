@@ -3,4 +3,3 @@ dist/
 .env
 *.log
 .DS_Store
-src/prompts/system-prompt.txt
