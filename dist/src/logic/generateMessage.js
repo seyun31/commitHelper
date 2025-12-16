@@ -7,9 +7,13 @@ exports.generateMessages = generateMessages;
 const simple_git_1 = __importDefault(require("simple-git"));
 const groq_sdk_1 = __importDefault(require("groq-sdk"));
 require("dotenv/config");
+const fs_1 = require("fs");
+const path_1 = require("path");
 const groq = new groq_sdk_1.default({
     apiKey: process.env.GROQ_API_KEY,
 });
+// 시스템 프롬프트 로드
+const SYSTEM_PROMPT = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, '../prompts/system-prompt.txt'), 'utf-8');
 async function generateMessages(files) {
     const git = (0, simple_git_1.default)();
     // 전체 diff 가져오기
@@ -23,59 +27,7 @@ async function generateMessages(files) {
             messages: [
                 {
                     role: 'system',
-                    content: `You are an expert at analyzing git diffs and generating meaningful commit messages.
-
-Analyze the provided git diff and generate appropriate commit messages for each file.
-
-**Classification Rules:**
-
-1. **test**: Test files or test-related changes
-   - Files with .test., .spec., __tests__ in path
-   - Adding/modifying test cases
-
-2. **style**: Code formatting or style changes only
-   - Whitespace, indentation, semicolons
-   - Import reordering without logic changes
-   - No functional changes
-
-3. **fix**: Bug fixes
-   - Fixing incorrect behavior
-   - Error handling improvements
-   - Patching issues
-
-4. **refactor**: Code restructuring without changing behavior
-   - Renaming variables/functions
-   - Extracting functions
-   - Code organization improvements
-
-5. **feat**: New features or functionality
-   - Adding new functions/classes
-   - Implementing new capabilities
-   - Extending existing features significantly
-
-6. **remove**: Deletions
-   - Removing files, functions, or features
-   - Deprecating code
-
-7. **etc**: Other changes
-   - Documentation
-   - Configuration files
-   - Build scripts
-   - Dependencies
-
-**Action Selection:**
-- "추가": New files or major additions
-- "수정": Modifying existing code
-- "삭제": Removing code or files
-
-**Response Format:**
-Return a JSON object with this exact structure:
-{"messages": [{"type": "test|style|fix|refactor|feat|remove|etc", "filename": "exact filename", "action": "추가|수정|삭제"}]}
-
-**Important:**
-- Generate 1-2 commit message options per file based on the most likely intent
-- Choose the most specific type that fits (prefer feat/fix/refactor over etc)
-- Base your decision on actual code changes, not just file names`,
+                    content: SYSTEM_PROMPT,
                 },
                 {
                     role: 'user',
@@ -95,18 +47,8 @@ Return a JSON object with this exact structure:
             }
         }
     }
-    catch (error) {
-        console.error('\n⚠️  Groq API 호출 실패:');
-        if (error instanceof Error) {
-            console.error('   Error:', error.message);
-            if (error.stack) {
-                console.error('   Stack:', error.stack.split('\n').slice(0, 3).join('\n'));
-            }
-        }
-        else {
-            console.error('   Unknown error:', error);
-        }
-        console.log('\n   기본 메시지로 fallback합니다...\n');
+    catch {
+        // API 호출 실패 시 조용히 fallback으로 넘어감
     }
     // Fallback: API 실패 시 규칙 기반으로 기본 메시지 생성
     const fallbackMessages = [];
@@ -125,32 +67,35 @@ Return a JSON object with this exact structure:
         // 규칙 기반 분석
         // case1: 테스트 파일
         if (lowerFile.includes('.test.') || lowerFile.includes('.spec.')) {
-            fallbackMessages.push({ type: 'test', filename, action: addedLines.length > 0 ? '추가' : '수정' });
+            fallbackMessages.push({
+                type: 'test',
+                description: `${filename} 테스트 ${addedLines.length > 0 ? '추가' : '수정'}`,
+            });
             continue;
         }
         // case2: 파일 삭제
         if (addedLines.length === 0 && removedLines.length > 0) {
-            fallbackMessages.push({ type: 'remove', filename, action: '삭제' });
+            fallbackMessages.push({ type: 'remove', description: `${filename} 제거` });
             continue;
         }
         // case3: 새 파일 추가
         if (removedLines.length === 0 && addedLines.length > 0 && diff.includes('new file')) {
-            fallbackMessages.push({ type: 'feat', filename, action: '추가' });
+            fallbackMessages.push({ type: 'feat', description: `${filename} 기능 추가` });
             continue;
         }
         // case4: 버그 수정 & 리팩토링 (추가와 삭제가 모두 있음)
         if (addedLines.length > 0 && removedLines.length > 0) {
-            fallbackMessages.push({ type: 'fix', filename, action: '수정' });
-            fallbackMessages.push({ type: 'refactor', filename, action: '수정' });
+            fallbackMessages.push({ type: 'fix', description: `${filename} 버그 수정` });
+            fallbackMessages.push({ type: 'refactor', description: `${filename} 리팩토링` });
             continue;
         }
         // case5: 기능 추가
         if (addedLines.length > 0 && removedLines.length === 0) {
-            fallbackMessages.push({ type: 'feat', filename, action: '추가' });
+            fallbackMessages.push({ type: 'feat', description: `${filename}에 기능 추가` });
             continue;
         }
         // case6: 그 외
-        fallbackMessages.push({ type: 'etc', filename, action: '수정' });
+        fallbackMessages.push({ type: 'etc', description: `${filename} 수정` });
     }
     return fallbackMessages;
 }

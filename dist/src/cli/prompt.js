@@ -12,8 +12,8 @@ async function runCLI() {
     const files = await (0, getDiff_1.getStagedDiff)();
     const messages = await (0, generateMessage_1.generateMessages)(files);
     const choices = messages.map((m) => ({
-        name: `${m.type}: ${m.filename} ${m.action}`,
-        value: `${m.type}: ${m.filename} ${m.action}`,
+        name: `${m.type}: ${m.description}`,
+        value: `${m.type}: ${m.description}`,
     }));
     // 직접 입력 옵션 추가
     choices.push({ name: '✏️ 직접 입력', value: '✏️ 직접 입력' });

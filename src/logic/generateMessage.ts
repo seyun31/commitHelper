@@ -56,7 +56,7 @@ export async function generateMessages(files: string[]): Promise<CommitMessage[]
         return messagesArray.slice(0, 5);
       }
     }
-  } catch (error) {
+  } catch {
     // API 호출 실패 시 조용히 fallback으로 넘어감
   }
 
