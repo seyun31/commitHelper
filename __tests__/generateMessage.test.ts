@@ -27,7 +27,7 @@ describe('generateMessages', () => {
     expect(messages.length).toBeGreaterThan(0);
     expect(messages[0]).toMatchObject({
       type: 'feat',
-      description: expect.stringContaining('file.ts')
+      description: expect.stringContaining('file.ts'),
     });
   });
 
@@ -40,7 +40,7 @@ describe('generateMessages', () => {
     expect(messages.length).toBeGreaterThan(0);
     expect(messages[0]).toMatchObject({
       type: 'remove',
-      description: expect.stringContaining('old.ts')
+      description: expect.stringContaining('old.ts'),
     });
   });
 
@@ -51,7 +51,7 @@ describe('generateMessages', () => {
 
     const messages = await generateMessages(['mixed.ts']);
     expect(messages.length).toBeGreaterThan(0);
-    const types = messages.map(m => m.type);
+    const types = messages.map((m) => m.type);
     expect(types).toContain('fix');
   });
 
@@ -64,7 +64,7 @@ describe('generateMessages', () => {
     expect(messages.length).toBeGreaterThan(0);
     expect(messages[0]).toMatchObject({
       type: 'test',
-      description: expect.stringContaining('example.test.ts')
+      description: expect.stringContaining('example.test.ts'),
     });
   });
 });
