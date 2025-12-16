@@ -8,8 +8,8 @@ export async function runCLI() {
   const messages = await generateMessages(files);
 
   const choices = messages.map((m) => ({
-    name: `${m.type}: ${m.filename} ${m.action}`,
-    value: `${m.type}: ${m.filename} ${m.action}`,
+    name: `${m.type}: ${m.description}`,
+    value: `${m.type}: ${m.description}`,
   }));
 
   // 직접 입력 옵션 추가
