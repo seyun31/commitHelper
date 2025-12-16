@@ -24,6 +24,8 @@
   "description": "Git의 변경사항을 분석하여 commit 메시지를 자동으로 생성하는 도구",
   "dependencies": {
     "@seyun31/commithelper": "^1.0.1",
+    "dotenv": "^17.2.3",
+    "groq-sdk": "^0.37.0",
     "inquirer": "^12.6.1",
     "simple-git": "^3.27.0"
   },
