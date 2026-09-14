@@ -9,9 +9,17 @@ const groq_sdk_1 = __importDefault(require("groq-sdk"));
 require("dotenv/config");
 const fs_1 = require("fs");
 const path_1 = require("path");
-const groq = new groq_sdk_1.default({
-    apiKey: process.env.GROQ_API_KEY,
-});
+let groqClient = null;
+// GROQ_API_KEY가 없으면 클라이언트를 만들지 않고 규칙 기반 추천으로 넘어간다.
+// 모듈 로드 시점에 생성하면 키가 없을 때 생성자 예외로 CLI가 폴백 전에 종료된다.
+function getGroqClient() {
+    const apiKey = process.env.GROQ_API_KEY;
+    if (!apiKey)
+        return null;
+    if (!groqClient)
+        groqClient = new groq_sdk_1.default({ apiKey });
+    return groqClient;
+}
 // 시스템 프롬프트 로드
 const SYSTEM_PROMPT = (0, fs_1.readFileSync)((0, path_1.join)(__dirname, '../prompts/system-prompt.txt'), 'utf-8');
 async function generateMessages(files) {
@@ -22,6 +30,9 @@ async function generateMessages(files) {
         return [];
     }
     try {
+        const groq = getGroqClient();
+        if (!groq)
+            throw new Error('GROQ_API_KEY is not set');
         const completion = await groq.chat.completions.create({
             model: 'llama-3.3-70b-versatile', // Groq 모델
             messages: [

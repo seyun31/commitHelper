@@ -34,6 +34,22 @@ npm install @seyun31/commithelper
 
 ---
 
+### 🔑 API 키 설정
+
+AI 추천은 [Groq](https://console.groq.com/keys) API 키가 있어야 동작합니다.
+
+```bash
+# 터미널 환경 변수로 설정
+export GROQ_API_KEY=your_api_key
+
+# 또는 명령을 실행하는 프로젝트 루트의 .env 파일에 작성
+GROQ_API_KEY=your_api_key
+```
+
+키가 없거나 Groq 요청이 실패하면(요청 오류 · 빈 응답 · JSON 파싱 실패) 파일별 변경 내용을 보고 커밋 타입을 고르는 **규칙 기반 추천**으로 자동 전환됩니다.
+
+---
+
 ### 💡 기본 사용법
 
 1. 코드를 자유롭게 수정하고 추가합니다.
@@ -108,8 +124,8 @@ AI가 분석하여 자동으로 분류하는 커밋 타입:
 ### 🛠️ 개발 & 품질 보증
 
 - 빌드 환경
-  - `TypeScript` 기반으로 개발되었으며, `npm run build1`를 통해 `dist/` 디렉토리에 JavaScript로 트랜스파일됩니다.
-  - CLI 실행을 위한 `bin`설정이 되어 있으며, 실제 배포 시 실행 파일이 `dist/bin/cli.js`로 출력됩니다.
+  - `TypeScript` 기반으로 개발되었으며, `npm run build`를 통해 `dist/` 디렉토리에 JavaScript로 트랜스파일됩니다.
+  - CLI 실행을 위한 `bin`설정이 되어 있으며, 실제 배포 시 실행 파일이 `dist/bin/index.js`로 출력됩니다.
 
 - Lint & Format
 ```bash
