@@ -11,9 +11,16 @@ export interface CommitMessage {
   description: string; // 구체적인 변경 내용 설명
 }
 
-const groq = new Groq({
-  apiKey: process.env.GROQ_API_KEY,
-});
+let groqClient: Groq | null = null;
+
+// GROQ_API_KEY가 없으면 클라이언트를 만들지 않고 규칙 기반 추천으로 넘어간다.
+// 모듈 로드 시점에 생성하면 키가 없을 때 생성자 예외로 CLI가 폴백 전에 종료된다.
+function getGroqClient(): Groq | null {
+  const apiKey = process.env.GROQ_API_KEY;
+  if (!apiKey) return null;
+  if (!groqClient) groqClient = new Groq({ apiKey });
+  return groqClient;
+}
 
 // 시스템 프롬프트 로드
 const SYSTEM_PROMPT = readFileSync(join(__dirname, '../prompts/system-prompt.txt'), 'utf-8');
@@ -29,6 +36,9 @@ export async function generateMessages(files: string[]): Promise<CommitMessage[]
   }
 
   try {
+    const groq = getGroqClient();
+    if (!groq) throw new Error('GROQ_API_KEY is not set');
+
     const completion = await groq.chat.completions.create({
       model: 'llama-3.3-70b-versatile', // Groq 모델
       messages: [

@@ -1,4 +1,5 @@
 import simpleGit from 'simple-git';
+import Groq from 'groq-sdk';
 import { generateMessages } from '../src/logic/generateMessage';
 
 jest.mock('simple-git');
@@ -10,6 +11,18 @@ describe('generateMessages', () => {
   beforeEach(() => {
     (simpleGit as jest.Mock).mockReturnValue({ diff: mockDiff });
     mockDiff.mockReset();
+    (Groq as unknown as jest.Mock).mockClear();
+    delete process.env.GROQ_API_KEY;
+  });
+
+  it('falls back to rule-based messages without creating a Groq client when GROQ_API_KEY is missing', async () => {
+    mockDiff
+      .mockResolvedValueOnce('new file\n+++ b/feature.ts\n+ line1')
+      .mockResolvedValueOnce('new file\n+++ b/feature.ts\n+ line1');
+
+    const messages = await generateMessages(['feature.ts']);
+    expect(Groq).not.toHaveBeenCalled();
+    expect(messages[0]).toMatchObject({ type: 'feat' });
   });
 
   it('returns empty array when no staged changes', async () => {
