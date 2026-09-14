@@ -1,6 +1,6 @@
 {
   "name": "@seyun31/commithelper",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "scripts": {
     "build": "tsc && mkdir -p dist/src/prompts && cp src/prompts/system-prompt.txt dist/src/prompts/",
