@@ -1,0 +1,33 @@
+name = "commithelper-api"
+main = "src/index.ts"
+compatibility_date = "2026-09-01"
+
+# https://commithelper-api.seyun31.workers.dev 로만 공개하고, 버전별 미리보기 주소는 만들지 않는다
+workers_dev = true
+preview_urls = false
+
+# 시스템 프롬프트는 CLI와 같은 파일(src/prompts/system-prompt.txt)을 번들에 넣어서 쓴다
+[[rules]]
+type = "Text"
+globs = ["**/*.txt"]
+fallthrough = true
+
+# IP당 1분에 10회
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 10
+  period = 60
+
+# GROQ_API_KEY는 여기 적지 않고 `npx wrangler secret put GROQ_API_KEY`로 등록한다
+
+# Workers Logs: 서버 코드의 console 출력(예: Groq 실패 상태 코드)만 남긴다.
+# 요청마다 IP 등을 자동 기록하는 invocation logs와 traces는 끈다. diff 본문은 어디에도 기록하지 않는다.
+[observability.logs]
+enabled = true
+invocation_logs = false
+
+[observability.traces]
+enabled = false

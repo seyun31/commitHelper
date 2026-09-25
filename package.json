@@ -1,6 +1,6 @@
 {
   "name": "@seyun31/commithelper",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "main": "index.js",
   "scripts": {
     "build": "tsc && mkdir -p dist/src/prompts && cp src/prompts/system-prompt.txt dist/src/prompts/",
@@ -10,6 +10,10 @@
     "format": "prettier --write \"{src,bin}/**/*.ts\"",
     "test": "jest"
   },
+  "files": [
+    "dist/bin",
+    "dist/src"
+  ],
   "bin": {
     "commitHelper": "./dist/bin/index.js"
   },

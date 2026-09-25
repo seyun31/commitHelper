@@ -1,9 +1,9 @@
 module.exports = {
   root: true,
-  ignorePatterns: ['node_modules/', 'dist/'],
+  ignorePatterns: ['node_modules/', 'dist/', '.wrangler/'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    project: ['./tsconfig.json', './tsconfig.eval.json'],
     sourceType: 'module',
     ecmaVersion: 'latest',
   },
